@@ -1,2 +1,4 @@
 # Composite-Toolbox
-Analyze sandwich laminates
+- Analyse sandwich laminates
+- Sensitivity analysis
+- Optimization
