@@ -1,8 +1,30 @@
-mat = [10, 5,3,1];
+E1 = 1.2E+05;
+E2 = 1.2E+05;
+NU12 = 0.3E-01;
+G12 = 3.9E+03;
+rho = 1.6E-09;
+Xt = 665.0;
+Xc = 566.0;
+Yt = 665.0;
+Yc = 566.0;
+S = 92.0;
+
+mat = {E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S};
 t1 = 0.5;
 t2 = 0.3;
 theta1 = 30;
 theta2 = 10;
+
+mat1 = Material(mat{:});
+mat1.reduced_stiffness();
+mat1.reduced_compliance();
+mat1.reduced_isotropic_compliance();
+mat1.reduced_isotropic_stiffness();
+E1 = 2.0E+05;                       % Change Material
+mat = {E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S};
+mat1 = mat1.set_properties(mat{:}); % !Muss auf Objekt referenziert werden!
+mat1.get_properties();
+%%
 
 newlam = stack();
 ply1 = ply(mat,theta1,t1);
