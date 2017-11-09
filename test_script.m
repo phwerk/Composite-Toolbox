@@ -15,6 +15,7 @@ t2 = 0.3;
 theta1 = 30;
 theta2 = 10;
 
+% Check Material Class
 mat1 = Material(mat{:});
 mat1.reduced_stiffness();
 mat1.reduced_compliance();
@@ -24,17 +25,30 @@ E1 = 2.0E+05;                       % Change Material
 mat = {E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S};
 mat1 = mat1.set_properties(mat{:}); % !Muss auf Objekt referenziert werden!
 mat1.get_properties();
-%%
 
-newlam = stack();
-ply1 = ply(mat,theta1,t1);
-ply2 = ply(mat,theta2,t2);
-newlam = newlam.add_ply(ply1);
-newlam = newlam.add_ply(ply2);
-newlam = newlam.add_ply(ply1);
-[Ex,Ey,NUxy,Gxy] = newlam.calc_effConst();
-EI = newlam.calc_EI();
-ABD = newlam.calc_ABD();
+% Check Ply Class
+ply1 = Ply(mat1,theta1,t1);
+Qbar = ply1.Qbar();
+Sbar = ply1.Sbar();
+effConst = ply1.calc_effConst();
+ABD1 = ply1.ABD(0,t1);
+ply1 = ply1.set_properties(mat1,theta2,t2);
+ABD2 = ply1.ABD(0,t2);
+
+% Check Core Class
+core1 = Core(mat1, t2);
+
+
+% Check Layup Class
+layup1 = Layup();
+layup1 = layup1.add_ply(ply1);
+layup1 = layup1.add_core(core1);
+ABD = layup1.ABD();
+
+% Check Panel Class
+
+
+
 
 %% Run simulation
 system('C:\TEST\3PB.bat','-echo')

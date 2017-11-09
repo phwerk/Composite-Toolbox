@@ -12,6 +12,11 @@ classdef Ply
             obj.theta = theta;
             obj.t = t;
         end
+        function obj = set_properties(obj,mat,theta,t)
+            obj.mat = mat;
+            obj.theta = theta;
+            obj.t = t;
+        end
 
         function Qbar = Qbar(obj)
             %Generate Rotated Stiffness Matrix
@@ -39,9 +44,10 @@ classdef Ply
         
         function [Ex,Ey,NUxy,NUyx,Gxy] = calc_effConst(obj)
             theta = obj.theta;
-            [E1,E2,NU12,G12,~,~,~,~,~,~] = obj.mat.get_properties();
             m = cos(theta*pi/180);
             n = sin(theta*pi/180);
+            [E1,E2,NU12,G12] = obj.mat.get_properties();
+            NU21 = NU12*E2/E1; 
             %Ex
             denom = m^4 + (E1/G12 - 2*NU12)*n*n*m*m + (E1/E2)*n^4;
             Ex = E1/denom;
@@ -61,7 +67,7 @@ classdef Ply
             Gxy = G12/denom;
         end
         
-        function ABD = ABD_layer(obj,z1,z2)
+        function ABD = ABD(obj,z1,z2)
             %Returns the ABD matrix for this ply 
             A = zeros(3); B = zeros(3); D = zeros(3);
             Qbar = obj.Qbar();

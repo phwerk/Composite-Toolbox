@@ -23,9 +23,20 @@ classdef Material
             obj.Yc = Yc;    obj.S = S;
         end
         
-        function mat = get_properties(obj)
-            mat = [obj.E1,obj.E2,obj.NU12,obj.G12,...
-                obj.rho,obj.Xt,obj.Xc,obj.Yt,obj.Yc,obj.S];
+        function obj = set_properties(obj,E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S)
+            obj.E1 = E1;    obj.E2 = E2;            
+            obj.NU12 = NU12;obj.G12 = G12;
+            obj.rho = rho;  obj.Xt = Xt;
+            obj.Xc = Xc;    obj.Yt = Yt;
+            obj.Yc = Yc;    obj.S = S;
+        end
+        
+        function [E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S] = get_properties(obj)
+            E1 = obj.E1;    E2 = obj.E2;
+            NU12 = obj.NU12;G12 = obj.G12;
+            rho = obj.rho;  Xt = obj.Xt;
+            Xc = obj.Xc;    Yt = obj.Yt;
+            Yc = obj.Yc;    S = obj.S;
         end
         
         function Q = reduced_stiffness(obj)
