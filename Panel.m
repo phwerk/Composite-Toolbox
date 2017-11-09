@@ -114,7 +114,7 @@ classdef Panel
             row_content = C{find(row)};
             disp_z_new = str2num(row_content(53:64));
             fclose(fid);
-        
+        end
     end
 end
 
