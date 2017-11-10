@@ -28,7 +28,7 @@ classdef Core
 
        
         function [Ex,Ey,NUxy,NUyx,Gxy] = calc_effConst(obj)
-            [Ex,Ey,NUxy,Gxy] = obj.mat.get_properties()
+            [Ex,Ey,NUxy,Gxy] = obj.mat.get_properties();
             NUyx = NUxy*Ey/Ex; 
         end
         
@@ -45,7 +45,7 @@ classdef Core
             end
             ABD = [A, B/2; B/2, D/3];    
         end
-        
+      
     end
 end
 

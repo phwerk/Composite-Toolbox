@@ -34,15 +34,17 @@ effConst = ply1.calc_effConst();
 ABD1 = ply1.ABD(0,t1);
 ply1 = ply1.set_properties(mat1,theta2,t2);
 ABD2 = ply1.ABD(0,t2);
-
+ply2 = Ply(mat1,theta2,t2);
 % Check Core Class
 core1 = Core(mat1, t2);
 
 
 % Check Layup Class
 layup1 = Layup();
-layup1 = layup1.add_ply(ply1);
-layup1 = layup1.add_core(core1);
+layup1 = layup1.add_ply(ply1,true);
+layup1 = layup1.add_ply(ply2,true);
+layup1 = layup1.add_ply(ply1,true);
+layup1 = layup1.add_ply(ply2,true);
 ABD = layup1.ABD();
 
 % Check Panel Class

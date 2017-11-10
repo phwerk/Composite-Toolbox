@@ -21,7 +21,7 @@ classdef Ply
         function Qbar = Qbar(obj)
             %Generate Rotated Stiffness Matrix
             Q = obj.mat.reduced_stiffness();
-            T = T_matrix(obj.theta);
+            T = obj.T_matrix();
             Tinv = inv(T);
             Qbar = Tinv*Q*Tinv.';
         end
@@ -29,12 +29,13 @@ classdef Ply
         function Sbar = Sbar(obj)
             %Generate Rotated Compliance Matrix
             S = obj.mat.reduced_compliance();
-            T = T_matrix(obj.theta);
+            T = obj.T_matrix();
             Sbar = T.'*S*T;
         end
         
-        function T = T_matrix(theta)
+        function T = T_matrix(obj)
             %Generate Rotation Matrix
+            theta = obj.theta
             m = cos(theta*pi/180);
             n = sin(theta*pi/180);
             T = [m*m, n*n, 2*m*n;

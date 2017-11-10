@@ -72,7 +72,7 @@ classdef Panel
             
         end
         
-        function results = run_sim(obj,dir,model_name)
+        function results = eval_3PB(obj,dir,model_name)
             %% Prepare string for material change
             layup = obj.layup.get_layup();
             
