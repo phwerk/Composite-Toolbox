@@ -17,37 +17,39 @@ theta2 = 10;
 
 % Check Material Class
 mat1 = Material(mat{:});
-mat1.reduced_stiffness();
-mat1.reduced_compliance();
-mat1.reduced_isotropic_compliance();
-mat1.reduced_isotropic_stiffness();
-E1 = 2.0E+05;                       % Change Material
+mat1.reducedStiffness();
+mat1.reducedCompliance();
+mat1.reducedIsotropicCompliance();
+mat1.reducedIsotropicStiffness();
+E1 = 2.0E+05;  E2 = 3.0E+3;                 % Change Material
 mat = {E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S};
-mat1 = mat1.set_properties(mat{:}); % !Muss auf Objekt referenziert werden!
-mat1.get_properties();
+mat2 = Material(mat{:});
+
 
 % Check Ply Class
 ply1 = Ply(mat1,theta1,t1);
 Qbar = ply1.Qbar();
 Sbar = ply1.Sbar();
-effConst = ply1.calc_effConst();
+effConst = ply1.calcEffConst();
 ABD1 = ply1.ABD(0,t1);
-ply1 = ply1.set_properties(mat1,theta2,t2);
+ply1 = ply1.setProperties(mat1,theta2,t2);
 ABD2 = ply1.ABD(0,t2);
-ply2 = Ply(mat1,theta2,t2);
+ply2 = Ply(mat2,theta2,t2);
 % Check Core Class
 core1 = Core(mat1, t2);
 
 
 % Check Layup Class
 layup1 = Layup();
-layup1 = layup1.add_ply(ply1,true);
-layup1 = layup1.add_ply(ply2,true);
-layup1 = layup1.add_ply(ply1,true);
-layup1 = layup1.add_ply(ply2,true);
+layup1 = layup1.addPly(ply1,true);
+layup1 = layup1.addPly(ply2,true);
+layup1 = layup1.addPly(ply1,true);
+layup1 = layup1.addPly(ply2,true);
 ABD = layup1.ABD();
-
+test = layup1.matToFem();
+test2 = layup1.plyToFem();
 % Check Panel Class
+
 
 
 
@@ -87,6 +89,7 @@ newfile = [dir,ref_file_name,newfile_name,'.fem'];
 fid = fopen(ref_file,'r');
 C = textscan(fid, '%s','Delimiter','');
 C = C{:};
+%%
 row = ~cellfun(@isempty, strfind(C,'CFK'));
 C{find(row)+2} = matchange;
 fclose(fid);
