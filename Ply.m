@@ -12,15 +12,20 @@ classdef Ply
             obj.theta = theta;
             obj.t = t;
         end
-        function obj = set_properties(obj,mat,theta,t)
+        function obj = setProperties(obj,mat,theta,t)
             obj.mat = mat;
             obj.theta = theta;
             obj.t = t;
         end
-
+        
+        function [mat,theta,t] = getProperties(obj)
+            mat = obj.mat;
+            theta = obj.theta;
+            t = obj.t;
+        end
         function Qbar = Qbar(obj)
             %Generate Rotated Stiffness Matrix
-            Q = obj.mat.reduced_stiffness();
+            Q = obj.mat.reducedStiffness();
             T = obj.T_matrix();
             Tinv = inv(T);
             Qbar = Tinv*Q*Tinv.';
@@ -28,14 +33,14 @@ classdef Ply
         
         function Sbar = Sbar(obj)
             %Generate Rotated Compliance Matrix
-            S = obj.mat.reduced_compliance();
+            S = obj.mat.reducedCompliance();
             T = obj.T_matrix();
             Sbar = T.'*S*T;
         end
         
         function T = T_matrix(obj)
             %Generate Rotation Matrix
-            theta = obj.theta
+            theta = obj.theta;
             m = cos(theta*pi/180);
             n = sin(theta*pi/180);
             T = [m*m, n*n, 2*m*n;
@@ -43,11 +48,11 @@ classdef Ply
                 -m*n, m*n, m*m-n*n];
         end     
         
-        function [Ex,Ey,NUxy,NUyx,Gxy] = calc_effConst(obj)
+        function [Ex,Ey,NUxy,NUyx,Gxy] = calcEffConst(obj)
             theta = obj.theta;
             m = cos(theta*pi/180);
             n = sin(theta*pi/180);
-            [E1,E2,NU12,G12] = obj.mat.get_properties();
+            [E1,E2,NU12,G12]= obj.mat.getProperties();
             NU21 = NU12*E2/E1; 
             %Ex
             denom = m^4 + (E1/G12 - 2*NU12)*n*n*m*m + (E1/E2)*n^4;

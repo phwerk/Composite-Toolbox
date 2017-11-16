@@ -23,7 +23,7 @@ classdef Material
             obj.Yc = Yc;    obj.S = S;
         end
         
-        function obj = set_properties(obj,E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S)
+        function obj = setProperties(obj,E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S)
             obj.E1 = E1;    obj.E2 = E2;            
             obj.NU12 = NU12;obj.G12 = G12;
             obj.rho = rho;  obj.Xt = Xt;
@@ -31,7 +31,7 @@ classdef Material
             obj.Yc = Yc;    obj.S = S;
         end
         
-        function [E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S] = get_properties(obj)
+        function [E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S] = getProperties(obj)
             E1 = obj.E1;    E2 = obj.E2;
             NU12 = obj.NU12;G12 = obj.G12;
             rho = obj.rho;  Xt = obj.Xt;
@@ -39,7 +39,7 @@ classdef Material
             Yc = obj.Yc;    S = obj.S;
         end
         
-        function Q = reduced_stiffness(obj)
+        function Q = reducedStiffness(obj)
             %Generate Stiffness Matrix
             NU12 = obj.NU12;    E1 = obj.E1;
             E2 = obj.E2;        G12 = obj.G12;
@@ -50,7 +50,7 @@ classdef Material
                 0                    , 0                    ,G12];
         end
         
-        function S = reduced_compliance(obj)
+        function S = reducedCompliance(obj)
             %Generate Compliance Matrix
             NU12 = obj.NU12;    E1 = obj.E1;
             E2 = obj.E2;        G12 = obj.G12;
@@ -60,7 +60,7 @@ classdef Material
                 0       , 0       ,1/G12];
         end
         
-        function Q = reduced_isotropic_stiffness(obj)
+        function Q = reducedIsotropicStiffness(obj)
             %Generate Stiffness Matrix
             E= obj.E1; NU = obj.NU12;
             
@@ -69,7 +69,7 @@ classdef Material
                 0             , 0             , E/2/(1+NU)];
         end
         
-        function S = reduced_isotropic_compliance(obj)
+        function S = reducedIsotropicCompliance(obj)
             %Generate Compliance Matrix
             E = obj.E1; NU = obj.NU12;
             
