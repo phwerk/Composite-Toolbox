@@ -8,23 +8,26 @@ classdef Ply
     
     methods
         function obj = Ply(mat,theta,t)
+            % Constructor
             obj.mat = mat;
             obj.theta = theta;
             obj.t = t;
         end
         function obj = setProperties(obj,mat,theta,t)
+            % Change properties
             obj.mat = mat;
             obj.theta = theta;
             obj.t = t;
         end
         
         function [mat,theta,t] = getProperties(obj)
+            % Return properties
             mat = obj.mat;
             theta = obj.theta;
             t = obj.t;
         end
         function Qbar = Qbar(obj)
-            %Generate Rotated Stiffness Matrix
+            % Generate rotated stiffness matrix
             Q = obj.mat.reducedStiffness();
             T = obj.T_matrix();
             Tinv = inv(T);
@@ -32,14 +35,14 @@ classdef Ply
         end
         
         function Sbar = Sbar(obj)
-            %Generate Rotated Compliance Matrix
+            % Generate rotated compliance matrix
             S = obj.mat.reducedCompliance();
             T = obj.T_matrix();
             Sbar = T.'*S*T;
         end
         
         function T = T_matrix(obj)
-            %Generate Rotation Matrix
+            % Generate rotation matrix
             theta = obj.theta;
             m = cos(theta*pi/180);
             n = sin(theta*pi/180);

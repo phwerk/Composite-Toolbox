@@ -16,6 +16,7 @@ classdef Material
     
     methods
         function obj = Material(E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S)
+            % Constructor
             obj.E1 = E1;    obj.E2 = E2;            
             obj.NU12 = NU12;obj.G12 = G12;
             obj.rho = rho;  obj.Xt = Xt;
@@ -24,6 +25,7 @@ classdef Material
         end
         
         function obj = setProperties(obj,E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S)
+            % Change properties
             obj.E1 = E1;    obj.E2 = E2;            
             obj.NU12 = NU12;obj.G12 = G12;
             obj.rho = rho;  obj.Xt = Xt;
@@ -32,6 +34,7 @@ classdef Material
         end
         
         function [E1,E2,NU12,G12,rho,Xt,Xc,Yt,Yc,S] = getProperties(obj)
+            % Returns all properties
             E1 = obj.E1;    E2 = obj.E2;
             NU12 = obj.NU12;G12 = obj.G12;
             rho = obj.rho;  Xt = obj.Xt;
@@ -40,7 +43,7 @@ classdef Material
         end
         
         function Q = reducedStiffness(obj)
-            %Generate Stiffness Matrix
+            % Generate stiffness matrix for orthogonal material
             NU12 = obj.NU12;    E1 = obj.E1;
             E2 = obj.E2;        G12 = obj.G12;
     
@@ -51,7 +54,7 @@ classdef Material
         end
         
         function S = reducedCompliance(obj)
-            %Generate Compliance Matrix
+            % Generate compliance matrix for orthogonal material
             NU12 = obj.NU12;    E1 = obj.E1;
             E2 = obj.E2;        G12 = obj.G12;
             
@@ -61,7 +64,7 @@ classdef Material
         end
         
         function Q = reducedIsotropicStiffness(obj)
-            %Generate Stiffness Matrix
+            % Generate stiffness matrix for isotropic material
             E= obj.E1; NU = obj.NU12;
             
             Q = [E/(1-NU*NU)  , NU*E/(1-NU*NU), 0;
@@ -70,7 +73,7 @@ classdef Material
         end
         
         function S = reducedIsotropicCompliance(obj)
-            %Generate Compliance Matrix
+            % Generate compliance matrix for isotropic material
             E = obj.E1; NU = obj.NU12;
             
             S = [1/E    , -NU/E , 0;
