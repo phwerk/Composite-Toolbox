@@ -1,38 +1,47 @@
 classdef Panel
-  
+% Panel object contains a layup object and the geometric parameters
+% 
+% Allows to run all kinds of analysis
+
     properties
-        layup;
-        l;
-        b;
+        layup;                              % Layup object
+        l;                                  % Panel length
+        b;                                  % Panel width
     end
     
     methods
         function obj = Panel(l,b,layup)
+            % Constructor
             obj.l = l;
             obj.b = b;
             obj.layup = layup;
         end
         
         function obj = add_layup(obj,layup)
+            % Add layup to panel (must be checked if it already exists)
             obj.layup = layup;
         end
         
         function obj = change_layup(obj,layup)
+            % Change layup
             obj.layup = layup;
         end
         
         function obj = change_geom(obj,l,b)
+            % Change geometry
             obj.l = l;
             obj.b = b;
         end
         
         function [Ex,Ey,NUxy,Gxy] = calc_effConst(obj)
+            % Returns the effective Constants
             [Ex,Ey,NUxy,Gxy] = obj.layup.calc_effConst();
         end
         
         function Ic_oi = calc_I(obj)
+            % Calculate second moment of inertia for rectangular cross section
+            % see also SES
             [t_l,~,t_so,t_si] = obj.layup.get_thickness();
-            %calculate second moment of inertia for rectangular cross section
             b = obj.b/1000;     t_l = t_l/1000;
             h_o = t_so/1000;    h_i = t_si/1000;
 
@@ -52,6 +61,7 @@ classdef Panel
         end
         
         function EI = calc_EI(obj)
+            % Calculate bending stiffness
             I = obj.calc_I();
             E = obj.calc_effConst();
             EI = E*I;

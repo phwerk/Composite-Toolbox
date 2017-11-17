@@ -1,5 +1,8 @@
 classdef Material
-  
+% Material objects contain the material parameters
+% They can be changed, returned and the stiffness and compliance matrix can
+% be calculated
+
     properties
         % Default Material
         E1 = 1.2E+05;
